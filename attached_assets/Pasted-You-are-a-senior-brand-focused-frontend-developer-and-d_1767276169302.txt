@@ -1,0 +1,76 @@
+You are a senior brand-focused frontend developer and digital agency designer.
+
+Build a modern, premium homepage for a digital marketing agency called “Kandle Digital”.
+
+GOAL:
+Create a handcrafted, non-AI-looking website that feels confident, human, and results-driven.
+Avoid generic SaaS layouts, stock dashboard visuals, and AI clichés.
+
+BRAND POSITIONING:
+- Name: Kandle Digital
+- Industry: Digital Marketing Agency
+- Market: Kenyan SMEs & growing brands
+- Tone: Premium, trustworthy, growth-focused
+- Personality: Strategic, clear, no fluff
+
+COLOR PALETTE (MANDATORY):
+- Primary / Background: Deep Charcoal — #0F172A
+- Accent / CTA: Warm Amber — #F59E0B
+- Hover Accent: Soft Orange — #FB923C
+- Page Background: Off White — #F9FAFB
+- Body Text: Cool Gray — #475569
+
+TYPOGRAPHY:
+- Headings: Bold modern sans-serif (large, confident, editorial)
+- Body text: Clean, readable sans-serif
+- Use strong hierarchy and whitespace
+- Avoid playful or techy fonts
+
+HERO SECTION:
+- Left-aligned editorial layout
+- Oversized headline with broken lines
+
+Headline:
+“Less Noise.
+More Results.”
+
+Subheadline:
+“Kandle Digital helps businesses grow using data-driven SEO, paid ads, and smart digital strategy.”
+
+CTAs:
+Primary Button (Amber):
+“Get a Free Growth Plan”
+Secondary Button (Outline / Text):
+“See Our Services”
+
+DO NOT:
+- Use stock dashboards
+- Use floating cards or badges
+- Use gradients everywhere
+- Use generic buzzwords
+
+INSTEAD:
+- Use abstract shapes, typography, or real-world business visuals
+- Minimal motion (fade-in, underline hover)
+- Strong contrast and whitespace
+
+SECTIONS TO INCLUDE:
+1. Hero Section
+2. About (short story-style copy)
+3. Services (SEO, Google Ads, Social Media, Websites)
+   - One-line outcome-based descriptions
+4. Trust Section (Kenyan businesses, SMEs, MPESA-friendly)
+5. Clear CTA section
+6. Minimal footer with WhatsApp & email emphasis
+
+TECH REQUIREMENTS:
+- React + Tailwind CSS
+- Mobile-first
+- Clean semantic HTML
+- Production-ready code
+- Real copy (no lorem ipsum)
+
+FINAL OUTPUT:
+- A complete homepage React component
+- Tailwind config using the provided color palette
+- Clean, professional, agency-grade design

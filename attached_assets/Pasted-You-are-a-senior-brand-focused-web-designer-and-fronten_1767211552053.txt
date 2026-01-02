@@ -1,0 +1,95 @@
+You are a senior brand-focused web designer and frontend developer.
+
+Redesign the KandleDigital.com website so it does NOT look like a generic AI SaaS template.
+
+GOALS:
+- Feel handcrafted, bold, and human
+- Reflect a Kenyan-based digital marketing agency with global standards
+- Avoid stock “dashboard laptop” hero images
+- No floating stat cards, no generic gradients, no AI clichés
+
+BRAND IDENTITY:
+- Brand name: KandleDigital
+- Industry: Digital Marketing Agency
+- Target: Kenyan SMEs, startups, and growing brands
+- Tone: Confident, results-driven, trustworthy, local but premium
+
+DESIGN DIRECTION:
+- Editorial-style layout (like modern agencies & magazines)
+- Strong typography hierarchy
+- More white space, fewer gimmicks
+- Subtle motion only (fade, slide, underline)
+- Custom sections instead of cards everywhere
+
+COLOR PALETTE:
+- Primary: Deep Navy / Charcoal
+- Accent: Warm Orange or Amber (representing “Kandle” / growth)
+- Secondary: Soft Sand / Light Grey
+- Text: Near-black, not pure black
+
+TYPOGRAPHY:
+- Headings: Bold, modern sans-serif (large, confident)
+- Body: Clean readable font
+- Use oversized headlines and broken lines for uniqueness
+
+HERO SECTION (VERY IMPORTANT):
+- NO stock dashboards
+- NO AI-style badges like “ROI Focus” or floating bubbles
+
+Instead:
+- Left: Big bold headline with personality
+  Example:
+  “We Don’t Run Ads.
+   We Build Revenue Systems.”
+
+- Right: Realistic agency-style visual:
+  - abstract shapes
+  - brand typography
+  - or real-world business imagery (team, workspace, campaign planning)
+
+- CTA buttons:
+  [Get a Growth Plan] (primary)
+  [See Our Work] (secondary)
+
+ABOUT SECTION:
+- Short story-style paragraph
+- Why KandleDigital exists
+- Focus on clarity, not buzzwords
+
+SERVICES SECTION:
+- Minimal grid
+- No icons overload
+- Services:
+  - SEO & Local Search (Google Business)
+  - Paid Ads (Google & Social)
+  - Social Media Setup & Strategy
+  - Website & Funnel Design
+- Each service has 1 sentence outcome-based description
+
+SOCIAL PROOF:
+- Use realistic metrics
+- Example:
+  “Trusted by growing businesses across Kenya”
+- Simple testimonials layout (text-based, no cards)
+
+LOCAL TRUST:
+- Mention Kenya, Nairobi, Mombasa subtly
+- MPESA-friendly businesses
+- SMEs focus
+
+FOOTER:
+- Clean, minimal
+- Contact CTA
+- WhatsApp & Email emphasis
+
+TECH REQUIREMENTS:
+- Use React + Tailwind
+- Mobile-first
+- Clean semantic HTML
+- No placeholder lorem ipsum
+- Write real copy, not AI buzzwords
+
+FINAL OUTPUT:
+- A full homepage component
+- Production-ready
+- Looks like a custom agency site, not an AI template

@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Kandle Digital Brand Palette */
+  --primary: 222 47% 11%; /* Deep Navy #0F172A */
+  --primary-foreground: 0 0% 100%; /* White text on primary */
+
+  /* Page Background */
+  --background: 210 20% 98%; /* Off White #F9FAFB */
+  --foreground: 215 19% 35%; /* Cool Gray #475569 */
+
+  /* Brand Colors */
+  --brand-blue: 224 76% 40%; /* Brand Blue #1E40AF */
+  --brand-teal: 168 76% 40%; /* Brand Teal #14B8A6 */
+  --warm-amber: 40 96% 53%; /* Warm Amber #F59E0B */
+  --soft-orange: 27 96% 61%; /* Soft Orange #FB923C */
+  --deep-navy: 222 47% 11%; /* Deep Navy #0F172A */
+
+  /* Accent Colors */
+  --accent: 40 96% 53%; /* Warm Amber #F59E0B */
+  --accent-hover: 27 96% 61%; /* Soft Orange #FB923C */
+  --accent-foreground: 222 47% 11%;
+
+  /* UI Elements */
+  --muted: 210 20% 94%;
+  --muted-foreground: 215 16% 47%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --border: 220 13% 91%; /* #E5E7EB */
+  --input: 220 13% 91%;
+  --ring: 40 96% 53%;
+  --radius: 0.5rem;
+
+  /* Dark sections */
+  --dark-bg: 222 47% 11%;
+  --dark-fg: 210 20% 98%;
+
+  /* Typography */
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+}
+
+.dark {
+  --background: 222 47% 11%;
+  --foreground: 210 20% 90%;
+  --card: 222 47% 14%;
+  --card-foreground: 210 20% 98%;
+  --muted: 222 40% 18%;
+  --muted-foreground: 215 20% 60%;
+  --border: 222 40% 20%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+  }
+}
+
+/* Dark section styling */
+.dark-section {
+  background-color: hsl(222 47% 11%);
+  color: hsl(210 20% 98%);
+}
+
+/* Amber accent */
+.amber-accent {
+  color: hsl(40 96% 53%);
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-fade-in-delay-1 {
+  animation: fadeIn 0.6s ease-out 0.1s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-2 {
+  animation: fadeIn 0.6s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-3 {
+  animation: fadeIn 0.6s ease-out 0.3s forwards;
+  opacity: 0;
+}
+
+/* Underline hover effect */
+.hover-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.hover-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: hsl(40 96% 53%);
+  transition: width 0.3s ease;
+}
+
+.hover-underline:hover::after {
+  width: 100%;
+}
+
+/* Shadcn utilities */
+@layer utilities {
+  .hover-elevate {
+    @apply relative overflow-visible transition-all duration-150;
+  }
+  .hover-elevate::before {
+    content: '';
+    @apply absolute inset-0 rounded-[inherit] transition-all duration-150 pointer-events-none;
+    background: transparent;
+  }
+  .hover-elevate:hover::before {
+    background: hsl(var(--foreground) / 0.05);
+  }
+
+  .active-elevate-2:active::before {
+    background: hsl(var(--foreground) / 0.1);
+  }
+
+  .toggle-elevate {
+    @apply relative overflow-visible;
+  }
+  .toggle-elevated::before {
+    background: hsl(var(--foreground) / 0.08);
+  }
+
+  .no-default-hover-elevate:hover::before {
+    background: transparent !important;
+  }
+  .no-default-active-elevate:active::before {
+    background: transparent !important;
+  }
+}
+
+/* Shadcn Component Overrides */
+@layer components {
+  .sidebar {
+    --sidebar-background: 210 20% 98%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 40 96% 53%;
+    --sidebar-primary-foreground: 222 47% 11%;
+    --sidebar-accent: 210 20% 94%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 214 20% 90%;
+    --sidebar-ring: 40 96% 53%;
+  }
+
+  .dark .sidebar {
+    --sidebar-background: 222 47% 11%;
+    --sidebar-foreground: 210 20% 98%;
+    --sidebar-accent: 222 40% 18%;
+    --sidebar-accent-foreground: 210 20% 98%;
+    --sidebar-border: 222 40% 20%;
+  }
+}
+
+/* Popover and dropdown backgrounds */
+:root {
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --secondary: 210 20% 94%;
+  --secondary-foreground: 222 47% 11%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --chart-1: 40 96% 53%;
+  --chart-2: 222 47% 45%;
+  --chart-3: 160 60% 45%;
+  --chart-4: 27 96% 61%;
+  --chart-5: 45 90% 55%;
+}
+
+.dark {
+  --popover: 222 47% 14%;
+  --popover-foreground: 210 20% 98%;
+  --secondary: 222 40% 18%;
+  --secondary-foreground: 210 20% 98%;
+  --accent: 222 40% 18%;
+  --accent-foreground: 210 20% 98%;
+}

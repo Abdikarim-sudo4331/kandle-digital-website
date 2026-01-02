@@ -1,0 +1,86 @@
+You are a senior brand-focused frontend developer.
+
+TASK:
+Correct and refine the website design so the Kandle Digital logo is placed precisely,
+scaled correctly, and visually harmonized with the website background.
+The entire website must strictly follow the logo’s color palette.
+
+DO NOT redesign the whole website.
+ONLY fix logo usage, background harmony, and color consistency.
+
+––––––––––––––––
+1. LOGO ADJUSTMENT (CRITICAL)
+––––––––––––––––
+- Place the Kandle Digital logo at the TOP-LEFT of the navigation bar
+- Logo must be vertically centered within the navbar
+- Logo height: 36–40px (desktop), 32px (mobile)
+- Maintain clear padding around the logo (minimum 16px)
+- DO NOT crop, recolor, stretch, or add backgrounds to the logo
+- Logo must sit on a SOLID background that complements it
+
+NAVBAR BACKGROUND:
+- Use Off-White: #F9FAFB
+- Add a subtle bottom border: #E5E7EB
+- Ensure logo colors are clearly visible and not washed out
+
+––––––––––––––––
+2. LOGO + WEBSITE BACKGROUND HARMONY
+––––––––––––––––
+- The logo must never sit on pure white (#FFFFFF)
+- Use Off-White (#F9FAFB) for light sections
+- Use Deep Navy (#0F172A) only for large hero or footer sections
+- Avoid placing the logo on dark backgrounds unless an inverted logo version exists
+
+––––––––––––––––
+3. STRICT COLOR PALETTE (NO EXCEPTIONS)
+––––––––––––––––
+Use ONLY the following colors across the entire website:
+
+- Deep Navy (Primary): #0F172A
+- Brand Blue: #1E40AF
+- Brand Teal: #14B8A6
+- Warm Amber (Primary CTA): #F59E0B
+- Soft Orange (Hover / Accent): #FB923C
+- Off White (Background): #F9FAFB
+- Cool Gray (Body Text): #475569
+
+DO NOT:
+- Introduce new colors
+- Use random grays or blacks
+- Use gradients outside of logo-inspired accents only
+
+––––––––––––––––
+4. HERO SECTION COLOR FIX
+––––––––––––––––
+- Background: Off-White (#F9FAFB)
+- “Less Noise.” → Deep Navy (#0F172A)
+- “More Results.” → Warm Amber (#F59E0B)
+- Body text → Cool Gray (#475569)
+
+CTA BUTTON:
+- Background: Warm Amber (#F59E0B)
+- Text: Deep Navy (#0F172A)
+- Hover: Soft Orange (#FB923C)
+
+––––––––––––––––
+5. CONSISTENCY RULES
+––––––––––––––––
+- Navigation links → Deep Navy
+- Active link → Brand Blue
+- Icons → Brand Teal or Brand Blue
+- Borders & dividers → light neutral gray only
+
+––––––––––––––––
+6. TECH REQUIREMENTS
+––––––––––––––––
+- React + Tailwind CSS
+- Update Tailwind config to include the brand color palette
+- Use semantic HTML
+- Mobile-first adjustments included
+
+––––––––––––––––
+FINAL OUTPUT:
+- Corrected navbar with properly aligned logo
+- Backgrounds matching logo visibility and contrast
+- Entire UI using only the logo’s color palette
+- Clean, premium, agency-grade finish
