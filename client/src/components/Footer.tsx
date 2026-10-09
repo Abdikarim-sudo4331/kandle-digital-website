@@ -1,9 +1,11 @@
 import { Link } from "wouter";
 import { MessageCircle, Mail, Phone } from "lucide-react";
 import logoImage from "@assets/Logo_1767358730163.jpeg";
+import { useContent, whatsappLink } from "@/lib/site";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const g = useContent().global;
 
   return (
     <footer className="py-16 px-6 bg-[#0F172A] text-white">
@@ -18,10 +20,8 @@ export function Footer() {
                 className="h-14 w-auto object-contain"
               />
             </Link>
-            <p className="text-white/60 leading-relaxed">
-              Less noise. More results.
-              <br />
-              Digital marketing that actually works.
+            <p className="text-white/60 leading-relaxed whitespace-pre-line">
+              {g.footerTagline}
             </p>
           </div>
 
@@ -41,7 +41,7 @@ export function Footer() {
             <h4 className="font-bold mb-4 text-white/80">Get in Touch</h4>
             <div className="space-y-4">
               <a 
-                href="https://wa.me/254700000000" 
+                href={whatsappLink(g.whatsappNumber)} 
                 className="flex items-center gap-3 text-white/60 hover:text-[#14B8A6] transition-colors group"
                 data-testid="link-footer-whatsapp"
               >
@@ -51,24 +51,24 @@ export function Footer() {
                 <span>WhatsApp Us</span>
               </a>
               <a 
-                href="mailto:hello@kandledigital.com" 
+                href={`mailto:${g.email}`} 
                 className="flex items-center gap-3 text-white/60 hover:text-[#14B8A6] transition-colors group"
                 data-testid="link-footer-email"
               >
                 <div className="p-2 rounded-lg bg-[#1E40AF]/10 text-[#1E40AF] group-hover:bg-[#1E40AF]/20 transition-colors">
                   <Mail className="h-5 w-5" />
                 </div>
-                <span>hello@kandledigital.com</span>
+                <span>{g.email}</span>
               </a>
               <a 
-                href="tel:+254700000000" 
+                href={`tel:${g.phoneDisplay.replace(/[^\d+]/g, "")}`} 
                 className="flex items-center gap-3 text-white/60 hover:text-[#14B8A6] transition-colors group"
                 data-testid="link-footer-phone"
               >
                 <div className="p-2 rounded-lg bg-[#1E40AF]/10 text-[#1E40AF] group-hover:bg-[#1E40AF]/20 transition-colors">
                   <Phone className="h-5 w-5" />
                 </div>
-                <span>+254 700 000 000</span>
+                <span>{g.phoneDisplay}</span>
               </a>
             </div>
           </div>
@@ -79,7 +79,7 @@ export function Footer() {
             © {currentYear} Kandle Digital. All rights reserved.
           </p>
           <p className="text-sm text-white/40">
-            Nairobi, Kenya
+            {g.location}
           </p>
         </div>
       </div>

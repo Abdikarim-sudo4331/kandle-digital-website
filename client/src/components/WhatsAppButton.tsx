@@ -1,10 +1,13 @@
 import { motion } from "framer-motion";
 import { SiWhatsapp } from "react-icons/si";
+import { useContent, whatsappLink } from "@/lib/site";
 
 export function WhatsAppButton() {
+  const { whatsappNumber } = useContent().global;
+
   return (
     <motion.a
-      href="https://wa.me/254700000000"
+      href={whatsappLink(whatsappNumber)}
       target="_blank"
       rel="noopener noreferrer"
       initial={{ scale: 0, opacity: 0 }}

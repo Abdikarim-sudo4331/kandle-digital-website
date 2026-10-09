@@ -1,5 +1,13 @@
 import { z } from 'zod';
-import { insertContactInquirySchema, contactInquiries } from './schema';
+import {
+  insertContactInquirySchema,
+  insertServiceSchema,
+  updateInquiryStatusSchema,
+  contactInquiries,
+} from './schema';
+import { serviceIcons } from './content';
+
+export type { InsertContactInquiry } from './schema';
 
 export const errorSchemas = {
   validation: z.object({
@@ -11,7 +19,14 @@ export const errorSchemas = {
   }),
 };
 
+export const serviceInputSchema = insertServiceSchema.extend({
+  icon: z.enum(serviceIcons),
+});
+
 export const api = {
+  site: {
+    get: { method: 'GET' as const, path: '/api/site' },
+  },
   contact: {
     submit: {
       method: 'POST' as const,
@@ -22,6 +37,24 @@ export const api = {
         400: errorSchemas.validation,
         500: errorSchemas.internal,
       },
+    },
+  },
+  admin: {
+    me: { method: 'GET' as const, path: '/api/admin/me' },
+    inquiries: {
+      list: { method: 'GET' as const, path: '/api/admin/inquiries' },
+      update: { method: 'PATCH' as const, path: '/api/admin/inquiries/:id', input: updateInquiryStatusSchema },
+      delete: { method: 'DELETE' as const, path: '/api/admin/inquiries/:id' },
+    },
+    services: {
+      list: { method: 'GET' as const, path: '/api/admin/services' },
+      create: { method: 'POST' as const, path: '/api/admin/services', input: serviceInputSchema },
+      update: { method: 'PUT' as const, path: '/api/admin/services/:id', input: serviceInputSchema },
+      delete: { method: 'DELETE' as const, path: '/api/admin/services/:id' },
+    },
+    content: {
+      list: { method: 'GET' as const, path: '/api/admin/content' },
+      update: { method: 'PUT' as const, path: '/api/admin/content/:key' },
     },
   },
 };

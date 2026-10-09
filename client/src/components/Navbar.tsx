@@ -1,15 +1,10 @@
 import { Link, useLocation } from "wouter";
 import { useState, useRef, useEffect } from "react";
-import { Menu, X, Search, Target, Share2, Globe, ChevronDown, ArrowRight } from "lucide-react";
+import { Menu, X, ChevronDown, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logoImage from "@assets/Logo_1767358730163.jpeg";
-
-const services = [
-  { icon: Search, title: "SEO Optimization", desc: "Get found on Google", href: "/services" },
-  { icon: Target, title: "Google Ads", desc: "Ads that convert", href: "/services" },
-  { icon: Share2, title: "Social Media", desc: "Build your presence", href: "/services" },
-  { icon: Globe, title: "Web Development", desc: "Sites that work", href: "/services" },
-];
+import { useSiteData } from "@/lib/site";
+import { getIcon } from "@/lib/icons";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,6 +12,7 @@ export function Navbar() {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [location] = useLocation();
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const services = useSiteData().services.filter((s) => s.featured);
 
   const links = [
     { href: "/", label: "Home" },
@@ -82,23 +78,26 @@ export function Navbar() {
             {servicesOpen && (
               <div className="absolute top-full left-0 mt-2 w-[320px] bg-white border border-border rounded-lg shadow-xl p-4 animate-in fade-in slide-in-from-top-2 duration-200">
                 <div className="space-y-1">
-                  {services.map((service, i) => (
+                  {services.map((service, i) => {
+                    const Icon = getIcon(service.icon);
+                    return (
                     <Link
-                      key={i}
-                      href={service.href}
+                      key={service.id}
+                      href="/services"
                       onClick={() => setServicesOpen(false)}
                       className="flex items-center gap-4 p-3 rounded-md hover:bg-[hsl(222,47%,11%)]/5 transition-colors group"
                       data-testid={`link-dropdown-service-${i}`}
                     >
                       <div className="p-2 rounded-md bg-[#14B8A6]/10 text-[#14B8A6] group-hover:bg-[#14B8A6] group-hover:text-white transition-colors">
-                        <service.icon className="h-4 w-4" />
+                        <Icon className="h-4 w-4" />
                       </div>
                       <div>
                         <p className="font-semibold text-sm text-[hsl(222,47%,11%)]">{service.title}</p>
-                        <p className="text-xs text-[hsl(215,19%,35%)]">{service.desc}</p>
+                        <p className="text-xs text-[hsl(215,19%,35%)] line-clamp-1">{service.summary}</p>
                       </div>
                     </Link>
-                  ))}
+                    );
+                  })}
                 </div>
 
                 {/* Dropdown Footer */}
@@ -188,18 +187,21 @@ export function Navbar() {
               
               {mobileServicesOpen && (
                 <div className="mt-1 ml-4 space-y-1 animate-in slide-in-from-top-2 duration-150">
-                  {services.map((service, i) => (
+                  {services.map((service, i) => {
+                    const Icon = getIcon(service.icon);
+                    return (
                     <Link
-                      key={i}
-                      href={service.href}
+                      key={service.id}
+                      href="/services"
                       onClick={() => { setIsOpen(false); setMobileServicesOpen(false); }}
                       className="flex items-center gap-3 py-3 px-4 rounded-md text-sm text-[#475569] hover:text-[#0F172A] transition-colors"
                       data-testid={`link-mobile-service-${i}`}
                     >
-                      <service.icon className="h-4 w-4 text-[#14B8A6]" />
+                      <Icon className="h-4 w-4 text-[#14B8A6]" />
                       {service.title}
                     </Link>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </div>
