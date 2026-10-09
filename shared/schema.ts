@@ -10,9 +10,9 @@ import {
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-// All tables have RLS enabled with no policies. The server connects as the
-// Postgres owner (bypasses RLS), so this only blocks Supabase's public
-// PostgREST API — the anon key shipped to browsers can't read or write these.
+// All tables have RLS enabled with no policies, so the public (anon/publishable)
+// key shipped to browsers can't read or write them. The API in functions/ uses
+// the secret key, which bypasses RLS. Table setup SQL: supabase/setup.sql.
 
 export const contactInquiries = pgTable("contact_inquiries", {
   id: serial("id").primaryKey(),

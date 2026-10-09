@@ -1,0 +1,14 @@
+{
+  "include": ["functions/**/*", "server/**/*", "shared/**/*"],
+  "compilerOptions": {
+    "noEmit": true,
+    "module": "ESNext",
+    "target": "ES2022",
+    "strict": true,
+    "lib": ["esnext"],
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "types": ["@cloudflare/workers-types", "node"]
+  }
+}

@@ -1,0 +1,16 @@
+# Copy to .dev.vars for local development (npm run dev).
+# In production, add the same four as Secrets in Cloudflare:
+# Workers & Pages → your project → Settings → Variables and Secrets.
+
+# Supabase → Project Settings → API Keys / Data API
+SUPABASE_URL=https://xxxxxxxx.supabase.co
+
+# Public key: "publishable" (sb_publishable_...) or legacy "anon" (eyJ...)
+SUPABASE_ANON_KEY=
+
+# Server-only key: "secret" (sb_secret_...) or legacy "service_role" (eyJ...)
+# Full database access. Never put this in client code or share it.
+SUPABASE_SECRET_KEY=
+
+# Comma-separated emails allowed into /admin
+ADMIN_EMAILS=you@kandledigital.com

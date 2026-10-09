@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -17,6 +18,7 @@ type ContactFormValues = z.infer<typeof contactSchema>;
 
 export default function Contact() {
   const { mutate: sendMessage, isPending } = useContact();
+  const honeypot = useRef<HTMLInputElement>(null);
   const content = useContent();
   const c = content.contact;
   const g = content.global;
@@ -31,7 +33,7 @@ export default function Contact() {
   });
 
   const onSubmit = (data: ContactFormValues) => {
-    sendMessage(data, {
+    sendMessage({ ...data, website: honeypot.current?.value }, {
       onSuccess: () => form.reset()
     });
   };
@@ -112,6 +114,16 @@ export default function Contact() {
               
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  {/* Spam trap: hidden from people, but bots fill in every field */}
+                  <input
+                    ref={honeypot}
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    className="absolute left-[-9999px] h-0 w-0 opacity-0"
+                  />
                   <FormField
                     control={form.control}
                     name="name"

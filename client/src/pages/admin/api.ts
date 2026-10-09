@@ -9,7 +9,7 @@ export class ApiError extends Error {
   }
 }
 
-// Calls our Express API with the current Supabase access token.
+// Calls our API (functions/) with the current Supabase access token.
 export async function adminFetch<T>(method: string, path: string, body?: unknown): Promise<T> {
   const { data } = (await supabase?.auth.getSession()) ?? { data: { session: null } };
   const token = data.session?.access_token;

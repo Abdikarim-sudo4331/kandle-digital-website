@@ -1,59 +1,60 @@
-import {
-  contentKeys,
-  defaultSiteData,
-  resolveBlock,
-  type PageContent,
-  type SiteData,
-} from "@shared/content";
-import { storage } from "./storage";
-import { supabaseAnonKey, supabaseUrl } from "./auth";
+import { contentKeys, defaultSiteData, resolveBlock, type PageContent, type SiteData } from "../shared/content";
+import type { Env } from "./env";
+import { Storage } from "./storage";
+import { dbClient } from "./supabase";
 
-// Public content changes only when an admin saves, so cache it in memory and
-// drop the cache on every admin write.
-let cache: { data: SiteData; at: number } | null = null;
-const TTL_MS = 60_000;
+// Cloudflare's edge cache (per data center). Saving in the admin clears it
+// in the admin's data center; elsewhere it expires within CACHE_SECONDS.
+const CACHE_KEY = "https://kandle-cache.internal/site-data-v1";
+const CACHE_SECONDS = 60;
 
-export function invalidateSiteData() {
-  cache = null;
+export async function invalidateSiteData() {
+  await caches.default.delete(CACHE_KEY);
 }
 
-export async function getSiteData(): Promise<SiteData> {
-  if (cache && Date.now() - cache.at < TTL_MS) return cache.data;
+async function loadSiteData(env: Env): Promise<SiteData> {
+  const storage = new Storage(dbClient(env));
+  const [blocks, rows] = await Promise.all([storage.getContentBlocks(), storage.listServices()]);
+  const content = Object.fromEntries(contentKeys.map((key) => [key, resolveBlock(key, blocks[key])])) as PageContent;
+  return {
+    content,
+    // An empty table means "not set up yet", not "no services".
+    services: rows.length
+      ? rows.filter((s) => s.published).map(({ id, title, summary, description, features, icon, featured }) => ({
+          id, title, summary, description, features, icon, featured,
+        }))
+      : defaultSiteData.services,
+  };
+}
+
+export async function getSiteData(env: Env, waitUntil: (p: Promise<unknown>) => void): Promise<SiteData> {
+  const cached = await caches.default.match(CACHE_KEY);
+  if (cached) return cached.json();
 
   try {
-    const [blocks, rows] = await Promise.all([
-      storage.getContentBlocks(),
-      storage.listServices(),
-    ]);
-    const content = Object.fromEntries(
-      contentKeys.map((key) => [key, resolveBlock(key, blocks[key])]),
-    ) as PageContent;
-    const data: SiteData = {
-      content,
-      // An empty table means "not seeded yet", not "no services".
-      services: rows.length
-        ? rows.filter((s) => s.published).map(({ id, title, summary, description, features, icon, featured }) => ({
-            id, title, summary, description, features, icon, featured,
-          }))
-        : defaultSiteData.services,
-    };
-    cache = { data, at: Date.now() };
+    const data = await loadSiteData(env);
+    waitUntil(caches.default.put(
+      CACHE_KEY,
+      new Response(JSON.stringify(data), {
+        headers: { "Content-Type": "application/json", "Cache-Control": `max-age=${CACHE_SECONDS}` },
+      }),
+    ));
     return data;
   } catch (err) {
-    // Keep the public site up if the database is unreachable.
+    // Keep the public site up if Supabase is unreachable or not configured.
     console.error("[site-data] falling back to defaults:", err);
-    return cache?.data ?? defaultSiteData;
+    return defaultSiteData;
   }
 }
 
-// Inline site data and public Supabase config into index.html so pages render
-// with the right copy on first paint, with no extra request.
-export async function injectSiteData(html: string): Promise<string> {
+// Inline script giving the page its content and public Supabase config,
+// so it renders with the right copy on first paint.
+export async function bootScript(env: Env, waitUntil: (p: Promise<unknown>) => void): Promise<string> {
   const payload = {
-    site: await getSiteData(),
-    config: { supabaseUrl: supabaseUrl ?? null, supabaseAnonKey: supabaseAnonKey ?? null },
+    site: await getSiteData(env, waitUntil),
+    config: { supabaseUrl: env.SUPABASE_URL ?? null, supabaseAnonKey: env.SUPABASE_ANON_KEY ?? null },
   };
   // Escape "<" so content can't close the script tag.
   const json = JSON.stringify(payload).replace(/</g, "\\u003c");
-  return html.replace("</head>", `<script>window.__BOOT__=${json}</script></head>`);
+  return `<script>window.__BOOT__=${json}</script>`;
 }
