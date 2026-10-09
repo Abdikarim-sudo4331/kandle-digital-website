@@ -1,24 +1,25 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { insertContactInquirySchema } from "@shared/schema";
 import { useContact } from "@/hooks/use-contact";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { MapPin, Mail, Phone, MessageSquare } from "lucide-react";
+import { useContent, whatsappLink } from "@/lib/site";
 
-// Matches API contract
-const contactSchema = z.object({
-  name: z.string().min(2, "Name is required"),
-  email: z.string().email("Invalid email address"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
-});
+// Same schema the API validates against
+const contactSchema = insertContactInquirySchema;
 
 type ContactFormValues = z.infer<typeof contactSchema>;
 
 export default function Contact() {
   const { mutate: sendMessage, isPending } = useContact();
+  const content = useContent();
+  const c = content.contact;
+  const g = content.global;
   
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
@@ -39,9 +40,9 @@ export default function Contact() {
     <div className="pt-20">
       <section className="bg-foreground text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="font-display font-bold text-4xl md:text-5xl mb-6">Contact Us</h1>
+          <h1 className="font-display font-bold text-4xl md:text-5xl mb-6">{c.title}</h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Ready to start your project? Get in touch with us today for a free consultation.
+            {c.subtitle}
           </p>
         </div>
       </section>
@@ -53,9 +54,9 @@ export default function Contact() {
             {/* Contact Info */}
             <div className="space-y-10">
               <div>
-                <h3 className="font-display font-bold text-2xl mb-6">Get in Touch</h3>
+                <h3 className="font-display font-bold text-2xl mb-6">{c.introTitle}</h3>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  Fill out the form and our team will get back to you within 24 hours. Or reach out to us directly via phone or WhatsApp.
+                  {c.introText}
                 </p>
               </div>
 
@@ -66,7 +67,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="font-bold text-foreground">Location</h4>
-                    <p className="text-muted-foreground">Nairobi, Kenya</p>
+                    <p className="text-muted-foreground">{g.location}</p>
                   </div>
                 </div>
 
@@ -76,7 +77,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="font-bold text-foreground">Email</h4>
-                    <p className="text-muted-foreground">hello@kandledigital.com</p>
+                    <p className="text-muted-foreground">{g.email}</p>
                   </div>
                 </div>
 
@@ -86,14 +87,14 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="font-bold text-foreground">Phone</h4>
-                    <p className="text-muted-foreground">+254 700 000 000</p>
+                    <p className="text-muted-foreground">{g.phoneDisplay}</p>
                   </div>
                 </div>
               </div>
 
               {/* WhatsApp Button */}
               <a 
-                href="https://wa.me/254700000000" 
+                href={whatsappLink(g.whatsappNumber)} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="block"

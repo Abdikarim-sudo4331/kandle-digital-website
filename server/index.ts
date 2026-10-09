@@ -6,6 +6,9 @@ import { createServer } from "http";
 const app = express();
 const httpServer = createServer(app);
 
+// Behind a hosting proxy (Render, Railway, Fly, etc.) so req.ip is the client's.
+app.set("trust proxy", 1);
+
 declare module "http" {
   interface IncomingMessage {
     rawBody: unknown;
@@ -48,7 +51,8 @@ app.use((req, res, next) => {
     const duration = Date.now() - start;
     if (path.startsWith("/api")) {
       let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse) {
+      // Don't log admin payloads: they contain contact details.
+      if (capturedJsonResponse && !path.startsWith("/api/admin")) {
         logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
       }
 
@@ -66,8 +70,9 @@ app.use((req, res, next) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
 
-    res.status(status).json({ message });
-    throw err;
+    if (status >= 500) console.error(err);
+    if (res.headersSent) return;
+    res.status(status).json({ message: status >= 500 ? "Internal Server Error" : message });
   });
 
   // importantly only setup vite in development and after

@@ -11,7 +11,10 @@ import Services from "@/pages/Services";
 import About from "@/pages/About";
 import Contact from "@/pages/Contact";
 import NotFound from "@/pages/not-found";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
+
+// Loaded on demand so the CMS (and supabase-js) stays out of the public bundle.
+const AdminApp = lazy(() => import("@/pages/admin/AdminApp"));
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -23,6 +26,15 @@ function ScrollToTop() {
 }
 
 function Router() {
+  const [pathname] = useLocation();
+  if (pathname === "/admin" || pathname.startsWith("/admin/")) {
+    return (
+      <Suspense fallback={null}>
+        <AdminApp />
+      </Suspense>
+    );
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
       <ScrollToTop />
