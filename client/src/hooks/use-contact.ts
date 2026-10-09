@@ -6,14 +6,15 @@ export function useContact() {
   const { toast } = useToast();
 
   return useMutation({
-    mutationFn: async (data: InsertContactInquiry) => {
+    // `website` is a hidden honeypot field; only bots fill it in.
+    mutationFn: async ({ website, ...data }: InsertContactInquiry & { website?: string }) => {
       // Validate locally first using Zod (optional but good practice)
       const validated = api.contact.submit.input.parse(data);
       
       const res = await fetch(api.contact.submit.path, {
         method: api.contact.submit.method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(validated),
+        body: JSON.stringify({ ...validated, website }),
       });
 
       if (!res.ok) {
